@@ -1,27 +1,47 @@
 package main_menu
 
 import (
+	"strconv"
+
+	"github.com/SamuelSchutz13/rpg-go/internal/game/model"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-type classModel struct {
+type ClassModel struct {
 	cursor  int
-	choices []string
+	choices []model.Class
 }
 
 func InitialClassMenu() tea.Model {
-	return classModel{
-		choices: []string{
-			"Warrior", "Wizard", "Archer", "Back",
+	return ClassModel{
+		choices: []model.Class{
+			model.Class{
+				Name: "Warrior",
+				Hp:   200,
+				Atk:  15,
+				Def:  10,
+			},
+			model.Class{
+				Name: "Wizard",
+				Hp:   100,
+				Atk:  25,
+				Def:  5,
+			},
+			model.Class{
+				Name: "Archer",
+				Hp:   150,
+				Atk:  20,
+				Def:  3,
+			},
 		},
 	}
 }
 
-func (m classModel) Init() tea.Cmd {
+func (m ClassModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m classModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m ClassModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -36,7 +56,7 @@ func (m classModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case 2:
 				return m, nil
 			case 3:
-				return InitialDifficultyMenu(), nil
+				return m, nil
 			}
 		case "up", "k":
 			if m.cursor > 0 {
@@ -52,17 +72,17 @@ func (m classModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m classModel) View() string {
-	s := "----- RPG in Terminal -----n\n"
+func (m ClassModel) View() string {
+	s := "----- RPG in Terminal -----\n\n"
 
 	for i, choice := range m.choices {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "->"
+			cursor = "➜"
 		}
 
-		s += cursor + " " + choice + "\n"
+		s += cursor + " " + choice.Name + " = " + " - Atk: " + strconv.Itoa(choice.Atk) + " - Def: " + strconv.Itoa(choice.Def) + " - Hp: " + strconv.Itoa(choice.Hp) + "\n"
 	}
 
 	return s

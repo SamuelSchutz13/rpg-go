@@ -4,24 +4,24 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-type menuModel struct {
+type MenuModel struct {
 	cursor  int
 	choices []string
 }
 
 func InitialMenu() tea.Model {
-	return menuModel{
+	return MenuModel{
 		choices: []string{
 			"New Game", "Load Game", "Quit",
 		},
 	}
 }
 
-func (m menuModel) Init() tea.Cmd {
+func (m MenuModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m MenuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -50,14 +50,14 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m menuModel) View() string {
-	s := "----- RPG in Terminal -----n\n"
+func (m MenuModel) View() string {
+	s := "----- RPG in Terminal -----\n\n"
 
 	for i, choice := range m.choices {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "->"
+			cursor = "➜"
 		}
 
 		s += cursor + " " + choice + "\n"

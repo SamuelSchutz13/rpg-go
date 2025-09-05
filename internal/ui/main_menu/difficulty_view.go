@@ -4,24 +4,24 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-type difficultyModel struct {
+type DifficultyModel struct {
 	cursor  int
 	choices []string
 }
 
 func InitialDifficultyMenu() tea.Model {
-	return difficultyModel{
+	return DifficultyModel{
 		choices: []string{
 			"Easy", "Medium", "Hard", "Back",
 		},
 	}
 }
 
-func (m difficultyModel) Init() tea.Cmd {
+func (m DifficultyModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m difficultyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m DifficultyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -30,11 +30,11 @@ func (m difficultyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			switch m.cursor {
 			case 0:
-				return m, nil
+				return InitialClassMenu(), nil
 			case 1:
-				return m, nil
+				return InitialClassMenu(), nil
 			case 2:
-				return m, nil
+				return InitialClassMenu(), nil
 			case 3:
 				return InitialMenu(), nil
 			}
@@ -52,14 +52,14 @@ func (m difficultyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m difficultyModel) View() string {
-	s := "----- RPG in Terminal -----n\n"
+func (m DifficultyModel) View() string {
+	s := "----- RPG in Terminal -----\n\n"
 
 	for i, choice := range m.choices {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "->"
+			cursor = "➜"
 		}
 
 		s += cursor + " " + choice + "\n"
