@@ -50,13 +50,13 @@ func (m ClassModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			switch m.cursor {
 			case 0:
-				return m, nil
+				return InitialCreateCharacterMenu(m.choices[0]), nil
 			case 1:
-				return m, nil
+				return InitialCreateCharacterMenu(m.choices[1]), nil
 			case 2:
-				return m, nil
+				return InitialCreateCharacterMenu(m.choices[2]), nil
 			case 3:
-				return m, nil
+				return InitialDifficultyMenu(), nil
 			}
 		case "up", "k":
 			if m.cursor > 0 {
@@ -73,16 +73,16 @@ func (m ClassModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m ClassModel) View() string {
-	s := "----- RPG in Terminal -----\n\n"
+	s := "----- Choose your class -----\n\n"
 
 	for i, choice := range m.choices {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "➜"
+			cursor = ">"
 		}
 
-		s += cursor + " " + choice.Name + " = " + " - Atk: " + strconv.Itoa(choice.Atk) + " - Def: " + strconv.Itoa(choice.Def) + " - Hp: " + strconv.Itoa(choice.Hp) + "\n"
+		s += cursor + " " + choice.Name + " = " + "Atk: " + strconv.Itoa(choice.Atk) + " - Def: " + strconv.Itoa(choice.Def) + " - Hp: " + strconv.Itoa(choice.Hp) + "\n"
 	}
 
 	return s

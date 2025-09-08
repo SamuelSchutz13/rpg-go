@@ -32,7 +32,7 @@ func (m MenuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case 0:
 				return InitialDifficultyMenu(), nil
 			case 1:
-				return m, nil
+				return InitialLoadViewMenu(), nil
 			case 2:
 				return m, tea.Quit
 			}
@@ -57,7 +57,7 @@ func (m MenuModel) View() string {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "➜"
+			cursor = ">"
 		}
 
 		s += cursor + " " + choice + "\n"

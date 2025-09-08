@@ -59,7 +59,7 @@ func (m DifficultyModel) View() string {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = "➜"
+			cursor = ">"
 		}
 
 		s += cursor + " " + choice + "\n"
