@@ -79,7 +79,7 @@ func (m ClassModel) View() string {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = ">"
+			cursor = "> "
 		}
 
 		s += cursor + " " + choice.Name + " = " + "Atk: " + strconv.Itoa(choice.Atk) + " - Def: " + strconv.Itoa(choice.Def) + " - Hp: " + strconv.Itoa(choice.Hp) + "\n"

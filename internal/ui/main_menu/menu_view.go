@@ -57,7 +57,7 @@ func (m MenuModel) View() string {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = ">"
+			cursor = "> "
 		}
 
 		s += cursor + " " + choice + "\n"

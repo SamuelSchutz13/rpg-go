@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/SamuelSchutz13/rpg-go/internal/game"
+	"github.com/SamuelSchutz13/rpg-go/internal/game/exploration"
 	"github.com/SamuelSchutz13/rpg-go/internal/game/model"
 	"github.com/SamuelSchutz13/rpg-go/internal/pkg"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type CreateCharacterMenu struct {
@@ -59,14 +61,21 @@ func (m CreateCharacterMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				Xp:    0,
 			}
 
-			saveState := model.GameState{
+			gameState := model.GameState{
 				Character: character,
 				PosX:      0,
 				PosY:      0,
 				Filename:  fileForSave,
 			}
 
-			game.Save(saveState, "")
+			game.Save(gameState, "")
+
+			ebiten.SetWindowSize(640, 480)
+			ebiten.SetWindowTitle("RPG in Go - Exploration Mode")
+
+			if err := ebiten.RunGame(exploration.NewEbitenGameExploration(gameState, exploration.ScreenMenu)); err != nil {
+				panic(err)
+			}
 
 			return m, nil
 		case tea.KeyCtrlC, tea.KeyEsc:

@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/SamuelSchutz13/rpg-go/internal/game"
+	"github.com/SamuelSchutz13/rpg-go/internal/game/exploration"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type LoadViewModel struct {
@@ -43,6 +45,15 @@ func (m LoadViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "enter":
 			gameState := game.LoadSave(m.choices[m.cursor])
+			ebiten.SetWindowSize(640, 480)
+			ebiten.SetWindowTitle("RPG in Go - Exploration Mode")
+
+			if err := ebiten.RunGame(&exploration.Game{
+				GameState: gameState,
+			}); err != nil {
+				panic(err)
+			}
+
 			fmt.Println(gameState)
 		case "up", "k":
 			if m.cursor > 0 {
@@ -65,7 +76,7 @@ func (m LoadViewModel) View() string {
 		cursor := " "
 
 		if m.cursor == i {
-			cursor = ">"
+			cursor = "> "
 		}
 
 		s += cursor + " " + choice + "\n"
